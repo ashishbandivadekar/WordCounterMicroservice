@@ -15,7 +15,7 @@ public class WordCounter {
     private List<String> alphabetsOnlyWordList;
 
     public WordCounter() {
-        this.alphabetsOnlyWordList = new ArrayList<>();
+        this.alphabetsOnlyWordList = new ArrayList<>(500);
     }
 
 }

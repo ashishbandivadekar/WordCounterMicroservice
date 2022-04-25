@@ -48,6 +48,10 @@ public class WordCounterServiceImplTest {
         assertThrows(IllegalCharacterException.class,  () -> {
             wordCounterServiceImpl.addWords(null);
         });
+
+        assertThrows(IllegalCharacterException.class,  () -> {
+            wordCounterServiceImpl.addWords("jasdhja12345");
+        });
     }
 
     @Test
