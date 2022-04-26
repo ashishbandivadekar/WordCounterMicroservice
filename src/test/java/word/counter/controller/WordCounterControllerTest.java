@@ -49,7 +49,7 @@ public class WordCounterControllerTest {
 
         Word word = new Word("ashish");
         String json = mapper.writeValueAsString(word);
-        long count = 10;
+        int count = 10;
         Mockito.when(wordCounterService.countSimilarMeaningWords(ArgumentMatchers.any())).thenReturn(count);
 
 

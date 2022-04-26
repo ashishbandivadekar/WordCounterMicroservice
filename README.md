@@ -3,6 +3,8 @@ Microservice for Word counter
 
 WordCounter is exposed as a Rest service.
 
+ConcurrentHashMap is used to provide thread safety for write operations .
+
 To run the Rest service locally:
 java -jar target/WordCounterMicroService-0.0.1-SNAPSHOT.jar
 

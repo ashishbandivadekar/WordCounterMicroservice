@@ -5,18 +5,21 @@ import org.springframework.stereotype.Service;
 import word.counter.exception.IllegalCharacterException;
 import word.counter.translator.TranslatorService;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+
 @Service
 public class WordCounterServiceImpl implements WordCounterService{
 
-    @Autowired
-    private WordCounter wordCounter;
+    private Map<String, Integer> wordCounterMap = new ConcurrentHashMap<>();
+
     @Autowired
     private TranslatorService translatorService;
 
 
-    public WordCounterServiceImpl(WordCounter wordCounter, TranslatorService translatorService) {
+    public WordCounterServiceImpl(TranslatorService translatorService) {
         super();
-        this.wordCounter = wordCounter;
         this.translatorService = translatorService;
     }
 
@@ -25,19 +28,27 @@ public class WordCounterServiceImpl implements WordCounterService{
         if(null == word || !word.matches("[a-zA-Z]+")){
             throw new IllegalCharacterException("IllegalCharacterException: "+word+ "contains non-alphabet characters");
         }
-        wordCounter.getAlphabetsOnlyWordList().add(word);
-        System.out.println("------"+ wordCounter.getAlphabetsOnlyWordList()+"-----------");
+
+        String translatedWord = translatorService.translateToEnglish(word);
+        if (null != translatedWord){
+            if(wordCounterMap.containsKey(translatedWord.toUpperCase())){
+                wordCounterMap.computeIfPresent(translatedWord.toUpperCase(),(k,v)->v+1);
+            }else{
+                wordCounterMap.put(translatedWord.toUpperCase(),1);
+            }
+        }
     }
 
     @Override
-    public long countSimilarMeaningWords(String word){
-        if(null != word)
-            return this.wordCounter.getAlphabetsOnlyWordList().stream().filter(s -> s.equalsIgnoreCase(word) || (null != translatorService.translateToEnglish(s) && translatorService.translateToEnglish(s).equalsIgnoreCase(word))).count();
+    public int countSimilarMeaningWords(String word){
+        if(null != word && wordCounterMap.containsKey(word.toUpperCase()))
+            return wordCounterMap.get(word.toUpperCase()) ;
         else
             return 0;
     }
 
-    public WordCounter getWordCounter() {
-        return wordCounter;
+    public Map<String, Integer> getWordCounterMap() {
+        return wordCounterMap;
     }
+
 }
