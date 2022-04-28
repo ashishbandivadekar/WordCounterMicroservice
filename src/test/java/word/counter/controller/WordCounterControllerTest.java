@@ -13,9 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import word.counter.exception.IllegalCharacterException;
+import word.library.exception.IllegalCharacterException;
 import word.counter.model.Word;
-import word.counter.service.WordCounterService;
+import word.library.service.WordCounterService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

@@ -2,20 +2,17 @@ package word.counter.service;
 
 
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import word.counter.exception.IllegalCharacterException;
-
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import word.library.exception.IllegalCharacterException;
+import word.library.service.WordCounterServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+
 
 @SpringBootTest
-public class WordCounterServiceImpleThreadSafetyTest {
+public class WordCounterServiceImplThreadSafetyTest {
 
     @Autowired
     private WordCounterServiceImpl wordCounterServiceImpl;
@@ -46,6 +43,7 @@ public class WordCounterServiceImpleThreadSafetyTest {
         t1.start();t2.start();t3.start();t4.start();t5.start();
         t1.join();t2.join();t3.join();t4.join();t5.join();
 
+        Thread.sleep(1000);
         assertEquals(Integer.valueOf(5),wordCounterServiceImpl.getWordCounterMap().get("OLLA"));
         assertEquals(Integer.valueOf(5),wordCounterServiceImpl.getWordCounterMap().get("SALUT"));
         assertEquals(Integer.valueOf(5),wordCounterServiceImpl.getWordCounterMap().get("BLUM"));
@@ -53,4 +51,6 @@ public class WordCounterServiceImpleThreadSafetyTest {
         assertEquals(Integer.valueOf(5),wordCounterServiceImpl.getWordCounterMap().get("CALL"));
         assertEquals(Integer.valueOf(5),wordCounterServiceImpl.getWordCounterMap().get("ROLL"));
     }
+
+
 }
