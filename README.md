@@ -1,6 +1,8 @@
 # WordCounterMicroservice
 Microservice for Word counter
 
+Assumption: TranslatorService has the capability to return the word as-is when  an english word is supplied to the TranslatorService.
+
 WordCounter is exposed as a Rest service.
 
 ConcurrentHashMap is used to provide thread safety for write operations .
